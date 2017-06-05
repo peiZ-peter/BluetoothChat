@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BluetoothChat</string>
+
+    <string name="unknown">Unknown</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
+    <string name="send_fail">Send fail</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connect">Connect</string>
+    <string name="about">About</string>
+    <string name="enable_bt">Enable bluetooth first</string>
+    <string name="version_info">Version: %s \n Nuo Dou, Pei Zhang \n May 2017\n Course project for COEN268 \n Santa Clara University</string>
+    <string name="not_connected">Not connected</string>
+    <string name="delete_successful">Delete successful</string>
+    <string name="restore_other">Restored other\'s picture</string>
+    <string name="restore_self">Restored self picture</string>
+    <string name="uploaded">Uploaded</string>
+    <string name="not_uploaded">Not uploaded</string>
+    <string name="connected">Connected</string>
+    <string name="select_device">Select Device</string>
+</resources>

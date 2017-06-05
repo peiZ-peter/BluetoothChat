@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:apps="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/connect_menu"
+        android:title="@string/connect"
+        apps:showAsAction="always"/>
+
+    <item
+        android:id="@+id/delete_record"
+        android:title="Delete Record"  />
+
+    <item
+        android:id="@+id/upload_self_pic"
+        android:title="Upload Icon for Me" />
+
+    <item
+        android:id="@+id/default_self_pic"
+        android:title="Default Icon for Me"/>
+
+    <item
+        android:id="@+id/upload_other_pic"
+        android:title="Upload Icon for Other" />
+
+    <item
+        android:id="@+id/default_other_pic"
+        android:title="Default Icon for Other"/>
+
+    <item
+        android:id="@+id/about_menu"
+        android:title="@string/about" />
+
+</menu>

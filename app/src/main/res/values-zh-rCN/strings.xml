@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">蓝牙聊天</string>
+
+    <string name="unknown">未知</string>
+    <string name="search">搜索</string>
+    <string name="cancel">取消</string>
+    <string name="send_fail">发送失败</string>
+    <string name="disconnect">断开连接</string>
+    <string name="connect">连接</string>
+    <string name="about">关于</string>
+    <string name="enable_bt">请先开启蓝牙功能</string>
+    <string name="version_info">版本： %s \n 窦诺，张沛 \n 2017年5月\n COEN268 Class Project \n Santa Clara University</string>
+    <string name="not_connected">未连接</string>
+    <string name="delete_successful">删除成功</string>
+    <string name="restore_other">恢复了对方的默认头像</string>
+    <string name="restore_self">恢复了自己的默认头像</string>
+    <string name="uploaded">已上传</string>
+    <string name="not_uploaded">上传失败</string>
+    <string name="connected">已连接</string>
+    <string name="select_device">选择设备</string>
+</resources>
