@@ -124,6 +124,8 @@ public class DeviceListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        //Cancel discovering
         if (mBluetoothAdapter.isDiscovering()) {
             mBluetoothAdapter.cancelDiscovery();
         }
@@ -142,7 +144,7 @@ public class DeviceListActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-
+        //Update menu
         switch (mBTSearchingState)
         {
             case BT_SEARCH_STATE_IDLE:
@@ -174,12 +176,15 @@ public class DeviceListActivity extends AppCompatActivity {
             case R.id.search_menu:
             {
                 if(mBTSearchingState == BT_SEARCH_STATE_IDLE) {
+                    //Searching
                     if (mBluetoothAdapter.isDiscovering()) {
                         mBluetoothAdapter.cancelDiscovery();
                     }
+                    //Re-construct device list
                     updateDeviceList();
                 }
                 else if(mBTSearchingState == BT_SEARCH_STATE_SEARCHING) {
+                    //Stop searching
                     if (mBluetoothAdapter.isDiscovering()) {
                         mBluetoothAdapter.cancelDiscovery();
                     }
@@ -201,11 +206,12 @@ public class DeviceListActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
+            //Find device
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 Log.d(TAG, "BT device found:" + device.getName());
-
+            //exclude bonded device
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     DeviceItemAdapter adapter = (DeviceItemAdapter) mBTDeviceListView.getAdapter();
                     adapter.add(device);

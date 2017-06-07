@@ -53,7 +53,6 @@ public class ConnectionManager {
     }
 
     public String startListen() {
-
         Log.d(TAG, "ConnectionManager startListen");
 
         if(mAcceptThread != null) {
@@ -88,7 +87,7 @@ public class ConnectionManager {
 
 
         try {
-
+            //start socket
             BluetoothSocket socket = device.createRfcommSocketToServiceRecord(BT_UUID);
             connected(socket, true);
             deviceName = device.getName();

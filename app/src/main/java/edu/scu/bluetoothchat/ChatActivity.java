@@ -174,10 +174,10 @@ public class ChatActivity extends AppCompatActivity {
             if (!BTAdapter.isEnabled()) {
                 Intent i = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivity(i);
-                finish();
                 return;
             }
 
+            //Check permissions
             int hasPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
             if (hasPermission != PackageManager.PERMISSION_GRANTED) {
 
@@ -467,6 +467,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         if(requestCode == RESULT_CODE_UPLOAD_ME && resultCode == RESULT_OK) {
+            //save uploaded picture to local
             if(data != null) {
                 try {
                     File f = new File(getFilesDir(), "me.jpg");
@@ -495,7 +496,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         if (requestCode == RESULT_CODE_UPLOAD_OTHER && resultCode == RESULT_OK) {
-
+            //save uploaded pictures to local
             if (data != null) {
                 try {
                     if (deviceAddr != null) {
