@@ -137,7 +137,7 @@ public class DeviceListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.device_menu, menu);
-        mSearchMenuItem = menu.findItem(R.id.search_menu);;
+        mSearchMenuItem = menu.findItem(R.id.search_menu);
         updateUI();
 
         return true;
@@ -194,8 +194,6 @@ public class DeviceListActivity extends AppCompatActivity {
 
             case android.R.id.home:
                 this.finish();
-
-                break;
 
         }
         return true;

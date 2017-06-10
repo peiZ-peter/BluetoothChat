@@ -9,14 +9,19 @@
     <string name="disconnect">斷開連接</string>
     <string name="connect">連接</string>
     <string name="about">關於</string>
-    <string name="enable_bt">請先開啟藍牙功能</string>
+    <string name="enable_bt">請先啟用藍牙功能</string>
     <string name="version_info">版本： %s \\n 竇諾，張沛 \\n 2017年5月\\n COEN268 Class Project \\n Santa Clara University</string>
     <string name="not_connected">未連接</string>
     <string name="delete_successful">刪除成功</string>
-    <string name="restore_other">恢復了對方的默認頭像</string>
-    <string name="restore_self">恢復了自己的默認頭像</string>
-    <string name="uploaded">已上傳</string>
-    <string name="not_uploaded">上傳失敗</string>
+    <string name="restore_other">已恢復對方的默認頭像</string>
+    <string name="restore_self">已恢復自己的默認頭像</string>
+    <string name="uploaded">已上載</string>
+    <string name="not_uploaded">上載失敗</string>
     <string name="connected">已連接</string>
     <string name="select_device">選擇設備</string>
+    <string name="delete_record">刪除聊天記錄</string>
+    <string name="restore_other_select">恢復對方的默認頭像</string>
+    <string name="restore_self_select">恢復自己的默認頭像</string>
+    <string name="upload_other_select">上載對方的頭像</string>
+    <string name="upload_self_select">上載自己的頭像</string>
 </resources>

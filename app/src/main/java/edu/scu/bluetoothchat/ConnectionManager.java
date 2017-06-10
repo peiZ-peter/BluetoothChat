@@ -28,7 +28,7 @@ public class ConnectionManager {
     public String addr = null;
     public static String deviceName = null;
 
-    private static final String BT_NAME = "AnddleChat";
+    private static final String BT_NAME = "Chat";
     private static final UUID BT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");//("fa87c0d0-afac-11de-8a39-0800200c9a66");
 
     private int mConnectState = CONNECT_STATE_IDLE;
@@ -41,10 +41,10 @@ public class ConnectionManager {
 
     public interface ConnectionListener {
 
-        public void onConnectStateChange(int oldState, int State);
-        public void onListenStateChange(int oldState, int State);
-        public void onSendData(boolean suc, byte[] data);
-        public void onReadData(byte [] data);
+        void onConnectStateChange(int oldState, int State);
+        void onListenStateChange(int oldState, int State);
+        void onSendData(boolean suc, byte[] data);
+        void onReadData(byte[] data);
     }
 
     public ConnectionManager(ConnectionListener cl) {
@@ -146,7 +146,6 @@ public class ConnectionManager {
         return "UNKNOWN";
     }
 
-    //==============================================================================================
     private synchronized void setConnectState(int state) {
 
         if(mConnectState == state) {

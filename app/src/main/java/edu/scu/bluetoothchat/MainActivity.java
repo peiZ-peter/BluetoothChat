@@ -1,9 +1,5 @@
 package edu.scu.bluetoothchat;
 
-/**
- * Main Activity of the app.
- */
-
 import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,24 +12,32 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,11 +52,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static edu.scu.bluetoothchat.ConnectionManager.deviceName;
+import static edu.scu.bluetoothchat.R.id.imageView;
 
-
-public class ChatActivity extends AppCompatActivity {
-
-    private static final String TAG = "ChatActivity";
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
     private final int RESULT_CODE_BTDEVICE = 0;
     private final int RESULT_CODE_UPLOAD_ME = 1;
     private final int RESULT_CODE_UPLOAD_OTHER = 2;
@@ -124,14 +128,14 @@ public class ChatActivity extends AppCompatActivity {
 
                             NotificationCompat.Builder mBuilder =
                                     new NotificationCompat.Builder(getApplicationContext())
-                                    .setSmallIcon(R.drawable.cat)
-                                    .setContentTitle(deviceName)
-                                    .setContentText(chatMsg.messageContent)
-                                    .setAutoCancel(true)
-                                    .setCategory(Intent.CATEGORY_LAUNCHER);
+                                            .setSmallIcon(R.drawable.cat)
+                                            .setContentTitle(deviceName)
+                                            .setContentText(chatMsg.messageContent)
+                                            .setAutoCancel(true)
+                                            .setCategory(Intent.CATEGORY_LAUNCHER);
                             Intent intent = new Intent(Intent.ACTION_MAIN);
                             intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                            intent.setComponent(new ComponentName(getApplicationContext(), ChatActivity.class));
+                            intent.setComponent(new ComponentName(getApplicationContext(), MainActivity.class));
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                             mBuilder.setContentIntent(pendingIntent);
@@ -161,13 +165,37 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_chat);
+        Log.d(TAG, "oncreate");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.app_name);
 
-            vibrator = (Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
+
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                super.onDrawerStateChanged(newState);
+                final InputMethodManager inputMethodManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(drawer.getWindowToken(), 0);
+            }
+        };
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+
+        try {
+
 
             //If bluetooth is not opened, ask for opening
             BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -187,12 +215,12 @@ public class ChatActivity extends AppCompatActivity {
                         0);
             }
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             }
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
 
 
@@ -236,7 +264,27 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+        Log.d(TAG,"on resume");
         super.onResume();
+
+
+        try {
+            String addr = "me.jpg";
+            File f=new File(getFilesDir(), addr);
+            ImageView iv = (ImageView)findViewById(imageView);
+            if(f.exists()) {
+                String cur = getFilesDir() + "/" + addr;
+                Drawable dw = Drawable.createFromPath(cur);
+                iv.setBackground(dw);
+            } else{
+                iv.setBackgroundResource(R.drawable.cat);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
         try {
             mMessageListView = (ListView) findViewById(R.id.message_list);
@@ -270,11 +318,10 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        }
-
-
+    }
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         try {
             super.onDestroy();
             mHandler.removeMessages(MSG_UPDATE_UI);
@@ -290,7 +337,6 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
     private ConnectionManager.ConnectionListener mConnectionListener = new ConnectionManager.ConnectionListener() {
 
         @Override
@@ -335,9 +381,20 @@ public class ChatActivity extends AppCompatActivity {
             if(content.length() > 0) {
                 boolean ret = mConnectionManager.sendData(content.getBytes());
                 if(!ret) {
-                    Toast.makeText(ChatActivity.this, R.string.send_fail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.send_fail, Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -354,29 +411,44 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        Intent reset = new Intent(this, DeleteActivity.class);
-
-
-        switch (item.getItemId())
-        {
-            case R.id.connect_menu: {
-                //if select connect menu button
-                if(mConnectionManager.getCurrentConnectState() == ConnectionManager.CONNECT_STATE_CONNECTED) {
-                    mConnectionManager.disconnect();
-
-                }
-                else if(mConnectionManager.getCurrentConnectState() == ConnectionManager.CONNECT_STATE_CONNECTING) {
-                    mConnectionManager.disconnect();
-
-                }
-                else if(mConnectionManager.getCurrentConnectState() == ConnectionManager.CONNECT_STATE_IDLE) {
-                    Intent i = new Intent(ChatActivity.this, DeviceListActivity.class);
-                    startActivityForResult(i, RESULT_CODE_BTDEVICE);
-                }
+        //noinspection SimplifiableIfStatement
+        if(id == R.id.connect_menu) {
+            //if select connect menu button
+            if(mConnectionManager.getCurrentConnectState() == ConnectionManager.CONNECT_STATE_CONNECTED) {
+                mConnectionManager.disconnect();
 
             }
+            else if(mConnectionManager.getCurrentConnectState() == ConnectionManager.CONNECT_STATE_CONNECTING) {
+                mConnectionManager.disconnect();
+
+            }
+            else if(mConnectionManager.getCurrentConnectState() == ConnectionManager.CONNECT_STATE_IDLE) {
+                Intent i = new Intent(this, DeviceListActivity.class);
+                startActivityForResult(i, RESULT_CODE_BTDEVICE);
+            }
             return true;
+        }
+
+        else return false;
+
+    }
+
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        Intent reset = new Intent(this, DeleteActivity.class);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        switch (item.getItemId()){
 
             case R.id.about_menu: {
                 //if selected about menu
@@ -393,7 +465,7 @@ public class ChatActivity extends AppCompatActivity {
                         out.write("9 9\r\n".getBytes());
                         out.close();
                     } catch (IOException e) {
-                        e.printStackTrace();;
+                        e.printStackTrace();
                     }
                     Toast.makeText(getApplicationContext(), R.string.delete_successful, Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(this, DeleteActivity.class);
@@ -464,6 +536,7 @@ public class ChatActivity extends AppCompatActivity {
             deviceAddr = data.getStringExtra("DEVICE_ADDR");
             Log.d("deviceaddr", deviceAddr);
             mConnectionManager.connect(deviceAddr);
+            Log.d(TAG, "ffff");
         }
 
         if(requestCode == RESULT_CODE_UPLOAD_ME && resultCode == RESULT_OK) {
@@ -489,9 +562,9 @@ public class ChatActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.not_uploaded, Toast.LENGTH_SHORT).show();
                     }
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -528,8 +601,6 @@ public class ChatActivity extends AppCompatActivity {
             }
 
         }
-
-
     }
 
     private Bitmap getBitmap(Uri uri) {

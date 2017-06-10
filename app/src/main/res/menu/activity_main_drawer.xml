@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/delete_record"
+            android:icon="@drawable/delete"
+            android:title="@string/delete_record" />
+        <item
+            android:id="@+id/upload_self_pic"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/upload_self_select" />
+        <item
+            android:id="@+id/default_self_pic"
+            android:icon="@drawable/cat"
+            android:title="@string/restore_self_select" />
+        <item
+            android:id="@+id/upload_other_pic"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/upload_other_select" />
+        <item
+            android:id="@+id/default_other_pic"
+            android:icon="@drawable/dog"
+            android:title="@string/restore_other_select" />
+    </group>
+
+    <item android:title="About">
+        <menu>
+            <item
+                android:id="@+id/about_menu"
+                android:icon="@drawable/about"
+                android:title="@string/about" />
+        </menu>
+    </item>
+
+</menu>

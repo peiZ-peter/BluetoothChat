@@ -18,4 +18,16 @@
     <string name="not_uploaded">Not uploaded</string>
     <string name="connected">Connected</string>
     <string name="select_device">Select Device</string>
+    <string name="title_activity_drawer" translatable="false">DrawerActivity</string>
+    <string name="delete_record">Delete Chat Record</string>
+    <string name="upload_self_select">Upload My Picture</string>
+    <string name="restore_self_select">Restore My Picture</string>
+    <string name="upload_other_select">Upload Other\'s Picture</string>
+    <string name="restore_other_select">Restore Other\'s Picture</string>
+
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="title_activity_main" translatable="false">BluetoothChat</string>
 </resources>

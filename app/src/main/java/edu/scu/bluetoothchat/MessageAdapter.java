@@ -31,7 +31,7 @@ public class MessageAdapter extends ArrayAdapter<ChatMessage> {
         mResourceOthers = resourceOthers;
         fMe =new File(context.getFilesDir(), "me.jpg");
         dirMe = context.getFilesDir().toString() + "/me.jpg";
-        String devAddr = ChatActivity.deviceAddr + ".jpg";
+        String devAddr = MainActivity.deviceAddr + ".jpg";
         if (devAddr != null) {
             fOther = new File(context.getFilesDir(), devAddr);
             dirOther = context.getFilesDir().toString() + "/" + devAddr;
